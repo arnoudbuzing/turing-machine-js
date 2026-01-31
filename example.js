@@ -29,12 +29,27 @@ const tm = new TuringMachine(rule);
 const history = tm.evolve(initialCondition, steps);
 
 history.forEach((step, i) => {
-    // Visualization: Highlight head
-    // Note: step.tape is the raw internal tape.
-    // step.headPosition is the index for that tape.
-    const tapeStr = step.tape.map((bit, idx) => {
-        return idx === step.headPosition ? `[${bit}]` : ` ${bit} `;
-    }).join('');
+    // Visualization:
+    // Determine the range to print so we always see the head and the tape.
+    // Internal tape indices: 0 to step.tape.length - 1.
+    // Head index: step.headPosition (can be < 0 or >= step.tape.length).
+
+    const minIdx = Math.min(0, step.headPosition);
+    const maxIdx = Math.max(step.tape.length - 1, step.headPosition);
+
+    let tapeStr = "";
+
+    // Virtual background assumption for CLI (0)
+    for (let idx = minIdx; idx <= maxIdx; idx++) {
+        let val;
+        if (idx >= 0 && idx < step.tape.length) {
+            val = step.tape[idx];
+        } else {
+            val = 0; // Virtual background
+        }
+
+        tapeStr += idx === step.headPosition ? `[${val}]` : ` ${val} `;
+    }
 
     console.log(`Step ${i}: State ${step.state} | ${tapeStr}`);
 });
