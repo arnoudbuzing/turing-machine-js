@@ -1,0 +1,17 @@
+{
+  "name": "turing-machine-js",
+  "version": "1.0.0",
+  "description": "Javascript implementation of 2-state 2-color Turing Machine based on Wolfram Language",
+  "main": "src/TuringMachine.js",
+  "scripts": {
+    "test": "node test/verify.js"
+  },
+  "keywords": [
+    "turing",
+    "machine",
+    "wolfram"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}
