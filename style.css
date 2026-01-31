@@ -9,7 +9,7 @@
     --secondary: #7f5af0;
     --accent: #2cb67d;
     --border: #2d3748;
-    
+
     --cell-0: #1e293b;
     --cell-1: #64ffda;
     --head-color: #fca311;
@@ -30,7 +30,7 @@ body {
     font-family: var(--font-heading);
     height: 100vh;
     overflow: hidden;
-    background-image: 
+    background-image:
         radial-gradient(circle at 15% 50%, rgba(127, 90, 240, 0.08) 0%, transparent 25%),
         radial-gradient(circle at 85% 30%, rgba(100, 255, 218, 0.05) 0%, transparent 25%);
 }
@@ -91,7 +91,7 @@ main {
     flex-direction: column;
     gap: 1.5rem;
     overflow-y: auto;
-    box-shadow: 4px 0 24px rgba(0,0,0,0.2);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.2);
     z-index: 10;
 }
 
@@ -121,7 +121,8 @@ main {
     gap: 0.5rem;
 }
 
-input[type="number"], textarea {
+input[type="number"],
+textarea {
     width: 100%;
     background: var(--bg-input);
     border: 1px solid var(--border);
@@ -133,7 +134,8 @@ input[type="number"], textarea {
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-input[type="number"]:focus, textarea:focus {
+input[type="number"]:focus,
+textarea:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.1);
@@ -224,30 +226,32 @@ button {
     justify-content: center;
     overflow: auto;
     /* subtle grid bg */
-    background-image: 
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     background-size: 20px 20px;
 }
 
 #canvas-container {
     padding: 40px;
-    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
 }
 
 canvas {
     display: block;
     border-radius: 4px;
-    image-rendering: pixelated; /* Sharp pixels */
+    image-rendering: pixelated;
+    /* Sharp pixels */
 }
 
 /* Range input styling */
 input[type=range] {
     width: 100%;
     margin: 0.5rem 0;
-    -webkit-appearance: none; 
-    background: transparent; 
+    -webkit-appearance: none;
+    background: transparent;
 }
+
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 16px;
@@ -255,12 +259,34 @@ input[type=range]::-webkit-slider-thumb {
     border-radius: 50%;
     background: var(--primary);
     cursor: pointer;
-    margin-top: -6px; 
+    margin-top: -6px;
 }
+
 input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 4px;
     cursor: pointer;
     background: var(--border);
     border-radius: 2px;
+}
+
+.legend-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.color-box {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    display: inline-block;
 }
