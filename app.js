@@ -54,6 +54,24 @@ function init() {
         });
     });
 
+    // Auto-update on JSON edit
+    jsonInput.addEventListener('input', () => {
+        try {
+            JSON.parse(jsonInput.value);
+            // Valid JSON
+            jsonInput.style.borderColor = 'var(--border)';
+            runSimulation();
+        } catch (e) {
+            // Invalid JSON - visualization stays on last valid state
+            // Optionally style to indicate error (already handled in runSimulation but that returns early)
+            // runSimulation checks JSON again, so we can just call it?
+            // checking runSimulation:
+            // try { JSON.parse... } catch { borderColor = red; return; }
+            // So yes, calling runSimulation() is enough to handle the UI feedback!
+            runSimulation();
+        }
+    });
+
     // Initial Run
     runSimulation();
 }
