@@ -10,8 +10,8 @@
     --accent: #2cb67d;
     --border: #2d3748;
 
-    --cell-0: #1e293b;
-    --cell-1: #64ffda;
+    --cell-0: #FACC15;
+    --cell-1: #F97316;
     --head-color: #fca311;
 
     --font-heading: 'Outfit', sans-serif;
@@ -289,4 +289,21 @@ input[type=range]::-webkit-slider-runnable-track {
     height: 12px;
     border-radius: 2px;
     display: inline-block;
+}
+
+.triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 9px solid #ffffff;
+    /* Use text color for visibility on dark UI bg, or specific color? User asked for black on canvas. On UI panel (dark), black is invisible. Let's use text color for "icon" or maybe muted white. */
+}
+
+.triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 9px solid #ffffff;
 }

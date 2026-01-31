@@ -8,7 +8,7 @@ const stepsRange = document.getElementById('steps-range');
 const stepsInput = document.getElementById('steps-input');
 const presetBtns = document.querySelectorAll('.preset-btn');
 const jsonInput = document.getElementById('init-json');
-const runBtn = document.getElementById('run-btn');
+
 const canvas = document.getElementById('tm-canvas');
 const ctx = canvas.getContext('2d');
 const stepCounter = document.getElementById('step-counter');
@@ -53,8 +53,6 @@ function init() {
             runSimulation();
         });
     });
-
-    runBtn.addEventListener('click', runSimulation);
 
     // Initial Run
     runSimulation();
@@ -176,10 +174,19 @@ function render(history) {
     // Let's compute bounds in Head-Fixed frame.
     const stepsData = history.map(step => {
         const row = [];
-        const tapeLen = step.tape.length;
-        for (let i = 0; i < tapeLen; i++) {
+        // Determine visible range including head
+        const minIdx = Math.min(0, step.headPosition);
+        const maxIdx = Math.max(step.tape.length - 1, step.headPosition);
+
+        for (let i = minIdx; i <= maxIdx; i++) {
+            let val = 0; // Default virtual background
+            if (i >= 0 && i < step.tape.length) {
+                val = step.tape[i];
+            }
+
             row.push({
-                val: step.tape[i],
+                val: val,
+                state: step.state,
                 relX: i - step.headPosition, // 0 means at head
                 isHead: i === step.headPosition
             });
@@ -216,15 +223,36 @@ function render(history) {
             const canvasX = (cell.relX - minRelX) * (CELL_SIZE + CELL_GAP);
             const canvasY = y * (CELL_SIZE + CELL_GAP);
 
-            ctx.fillStyle = cell.val === 1 ? '#64ffda' : '#1e293b'; // standard colors
+            // Tape 0: Yellow (#FACC15), Tape 1: Orange (#F97316)
+            ctx.fillStyle = cell.val === 1 ? '#F97316' : '#FACC15';
 
             // Draw Cell
             ctx.fillRect(canvasX, canvasY, CELL_SIZE, CELL_SIZE);
 
-            // Highlight Head?
+            // Highlight Head
             if (cell.isHead) {
-                ctx.fillStyle = 'rgba(252, 163, 17, 0.4)'; // Orange glow
-                ctx.fillRect(canvasX, canvasY, CELL_SIZE, CELL_SIZE);
+                // Draw filled white triangle
+                // State 1: Up, State 2: Down
+                ctx.fillStyle = '#ffffff';
+
+                const cx = canvasX + CELL_SIZE / 2;
+                const cy = canvasY + CELL_SIZE / 2;
+                const size = CELL_SIZE * 0.6; // Triangle size relative to cell
+                const r = size / 2;
+
+                ctx.beginPath();
+                if (cell.state === 1) {
+                    // Up Triangle
+                    ctx.moveTo(cx, cy - r);
+                    ctx.lineTo(cx + r, cy + r);
+                    ctx.lineTo(cx - r, cy + r);
+                } else {
+                    // Down Triangle
+                    ctx.moveTo(cx, cy + r);
+                    ctx.lineTo(cx + r, cy - r);
+                    ctx.lineTo(cx - r, cy - r);
+                }
+                ctx.fill();
             }
         });
     });
