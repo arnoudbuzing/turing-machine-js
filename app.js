@@ -62,15 +62,43 @@ function init() {
             jsonInput.style.borderColor = 'var(--border)';
             runSimulation();
         } catch (e) {
-            // Invalid JSON - visualization stays on last valid state
-            // Optionally style to indicate error (already handled in runSimulation but that returns early)
-            // runSimulation checks JSON again, so we can just call it?
-            // checking runSimulation:
-            // try { JSON.parse... } catch { borderColor = red; return; }
-            // So yes, calling runSimulation() is enough to handle the UI feedback!
-            runSimulation();
+            runSimulation(); // Updates if valid, or keeps old if invalid (but logic above handles invalid by returning early/rendering old?)
+            // Actually runSimulation returns early on invalid JSON. 
+            // We just want to try running it.
         }
     });
+
+    // Check URL Parameters
+    const params = new URLSearchParams(window.location.search);
+    const pRule = params.get('rule');
+    const pSteps = params.get('steps');
+    const pState = params.get('state');
+    const pTape = params.get('tape'); // comma separated
+    const pHead = params.get('head');
+
+    if (pRule) {
+        ruleInput.value = pRule;
+    }
+    if (pSteps) {
+        stepsInput.value = pSteps;
+        stepsRange.value = pSteps;
+    }
+
+    // Construct Initial Condition from params if provided
+    // Priority: Explicit state/tape/head -> JSON input
+    if (pTape) { // Minimal requirement usually tape?
+        const stateVal = pState ? parseInt(pState) : 1;
+        const headVal = pHead ? parseInt(pHead) : 0;
+        const tapeArr = pTape.split(',').map(n => parseInt(n));
+
+        const initObj = {
+            state: stateVal,
+            tape: tapeArr,
+            headPosition: headVal
+        };
+
+        jsonInput.value = JSON.stringify(initObj, null, 2);
+    }
 
     // Initial Run
     runSimulation();
