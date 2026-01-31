@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stellar Computation | Turing Machine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h1>Turing<span class="highlight">Machine</span></h1>
+            </div>
+            <div class="controls-status">
+                <span id="step-counter">Step: 0</span>
+            </div>
+        </header>
+
+        <main>
+            <aside class="sidebar">
+                <div class="panel">
+                    <h2>Configuration</h2>
+                    
+                    <div class="control-group">
+                        <label for="rule-input">Rule Number (0-4095)</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="rule-input" min="0" max="4095" value="2506">
+                            <button id="random-rule-btn" title="Random Rule">🎲</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="steps-input">Steps</label>
+                        <input type="range" id="steps-range" min="10" max="500" value="50">
+                        <input type="number" id="steps-input" min="10" max="1000" value="50">
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h2>Initial Condition</h2>
+                    <div class="control-group">
+                        <label>Presets</label>
+                        <div class="preset-buttons">
+                            <button class="preset-btn active" data-json='{"state":1,"tape":[0,0,1,0],"headPosition":2}'>Simple</button>
+                            <button class="preset-btn" data-json='[[1,1],[[0,1],0]]'>Infinite (Bg 0)</button>
+                            <button class="preset-btn" data-json='[[1,0],[0,0,0]]'>Cyclic</button>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="init-json">Custom JSON</label>
+                        <textarea id="init-json" rows="3">{"state":1,"tape":[0,0,1,0],"headPosition":2}</textarea>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="run-btn" class="primary-btn">
+                        <span class="icon">▶</span> Run Simulation
+                    </button>
+                </div>
+            </aside>
+
+            <section class="visualizer">
+                <div id="canvas-container">
+                    <!-- Canvas will be injected here -->
+                    <canvas id="tm-canvas"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
